@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
+using System.Net.Http.Json;
 using System.Reflection.Metadata;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using WarehouseAPI.Domain.ProductAggregate;
 
@@ -33,6 +36,9 @@ namespace WarehouseAPI.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>().HasKey(p => p.Id);
+            modelBuilder.Entity<ProductDiscountPrice>().HasKey(p => p.Id);
+            modelBuilder.Entity<ProductPrice>().HasKey(p => p.Id);
             modelBuilder.Entity<Product>()
             .HasMany<ProductDiscountPrice>()
             .WithOne(p => p.Product)
@@ -45,18 +51,18 @@ namespace WarehouseAPI.Infrastructure.Data
 
             modelBuilder.Entity<Product>()
            .Property(p => p.CompanyInformation)
-           .HasConversion(
-               p => new { p.CompanyName, p.CompanyAddress, p.CompanyEmail, p.MadeCountry, p.CompanyPhone },  // Convert Money to a tuple  
-               p => new CompanyInformation(p.CompanyName, p.CompanyAddress, p.CompanyEmail, p.MadeCountry, p.CompanyPhone) // Convert tuple back to Money  
-           );
+            .HasConversion(
+            v => JsonConvert.SerializeObject(v), // اطمینان از نبود آرگومان اختیاری در این قسمت  
+            v => JsonConvert.DeserializeObject<CompanyInformation>(v));
+
         }
-          
+
         private string DbPath { get; }
         private static string Init()
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            return System.IO.Path.Join(path, "OrderDB.db");
+            return System.IO.Path.Join(path, "WarehouseDB.db");
         }
     }
 }
