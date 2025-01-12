@@ -13,7 +13,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
             MadeCountry = madeCountry;
         }
 
-        public CompanyInformation() { }
+        private CompanyInformation() { }
         public string? CompanyName { get; protected set; }
         public string? CompanyAddress { get; protected set; }
         public string? CompanyPhone { get; protected set; }

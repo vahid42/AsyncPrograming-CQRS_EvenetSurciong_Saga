@@ -49,12 +49,8 @@ namespace WarehouseAPI.Infrastructure.Data
            .WithOne(p => p.Product)
            .HasForeignKey(p => p.ProductId);
 
-            modelBuilder.Entity<Product>()
-           .Property(p => p.CompanyInformation)
-            .HasConversion(
-            v => JsonConvert.SerializeObject(v), // اطمینان از نبود آرگومان اختیاری در این قسمت  
-            v => JsonConvert.DeserializeObject<CompanyInformation>(v));
-
+            modelBuilder.Entity<Product>().ComplexProperty(p => p.CompanyInformation);
+            
         }
 
         private string DbPath { get; }

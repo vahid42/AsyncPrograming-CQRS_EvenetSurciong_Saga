@@ -18,8 +18,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
         public DateTime CreateDatetime { get; private set; }
         public IReadOnlyCollection<ProductPrice> ProductPrices => productPrices.AsReadOnly();//add an agent will cause an error
         public IReadOnlyCollection<ProductDiscountPrice> ProductDiscountPrices => productDiscountPrices.AsReadOnly();
-
-
+        private Product() { }
         public Product(string ProductName, ProductType ProductType, string? Description, CompanyInformation companyInformation)
         {
             if (ProductName != null || ProductName != string.Empty)
@@ -36,15 +35,15 @@ namespace WarehouseAPI.Domain.ProductAggregate
             CompanyInformation = companyInformation;
         }
 
-        public void AddProductPrice(decimal  PurchasePrice, decimal  PercentageProfitPrice, int Quantity)
+        public void AddProductPrice(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity)
         {
             var productPrice = new ProductPrice(PurchasePrice, PercentageProfitPrice, Quantity, this);
             productPrices.Add(productPrice);
         }
 
-        public void AddProductDiscountPrice(DateTime StartDiscount, DateTime EndDiscount, decimal  DiscountPercentage)
+        public void AddProductDiscountPrice(DateTime StartDiscount, DateTime EndDiscount, decimal DiscountPercentage)
         {
-            decimal  orginalPrice = productPrices.FirstOrDefault(c => c.IsActive)?.FinalPrice ?? 0;
+            decimal orginalPrice = productPrices.FirstOrDefault(c => c.IsActive)?.FinalPrice ?? 0;
             var productDiscountPrice = new ProductDiscountPrice(orginalPrice, StartDiscount, EndDiscount, DiscountPercentage, this);
             productDiscountPrices.Add(productDiscountPrice);
         }
