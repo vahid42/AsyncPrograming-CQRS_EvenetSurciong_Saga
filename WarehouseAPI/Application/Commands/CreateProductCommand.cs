@@ -1,25 +1,14 @@
-﻿using WarehouseAPI.Domain.ProductAggregate;
+﻿using WarehouseAPI.Comman.Dtos;
 
-namespace WarehouseAPI.Commands
+namespace WarehouseAPI.Application.Commands
 {
-    public class CreateProductCommand: ICommand<Product>
+    public class CreateProductCommand : ICommand<CreateProductDto>
     {
-        public CreateProductCommand(string? productName, ProductType productType, decimal  price, decimal  discountedPrice, int quantity, string? description)
+        public CreateProductDto CreateProductDto { get;}
+        public CreateProductCommand(CreateProductDto createProductDto)
         {
-            ProductName = productName;
-            ProductType = productType;
-            Price = price;
-            DiscountedPrice = discountedPrice;
-            Quantity = quantity;
-            Description = description;
+            CreateProductDto = createProductDto;
         }
-
-        public string? ProductName { get;   }
-        public ProductType ProductType { get; }
-        public decimal  Price { get;  }
-        public decimal  DiscountedPrice { get;}
-        public int Quantity { get; }
-        public string? Description { get; }
 
     }
 }
