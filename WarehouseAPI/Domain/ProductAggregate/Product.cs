@@ -11,6 +11,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
         private readonly List<ProductDiscountPrice> productDiscountPrices;
 
         public string? ProductName { get; protected set; }
+        public string? ProductCobde { get; protected set; }
         public ProductType ProductType { get; protected set; }
         public CompanyInformation CompanyInformation { get; protected set; }
         public bool IsActive { get; protected set; }
@@ -21,12 +22,11 @@ namespace WarehouseAPI.Domain.ProductAggregate
         private Product() { }
         public Product(string ProductName, ProductType ProductType, string? Description, CompanyInformation companyInformation)
         {
-            if (ProductName != null || ProductName != string.Empty)
+            if (ProductName == null || ProductName == string.Empty)
                 throw new ArgumentOutOfRangeException("The Product name must not be empty.");
 
             Id = Guid.NewGuid();
             CreateDatetime = DateTime.Now;
-            IsActive = true;
             productDiscountPrices = new List<ProductDiscountPrice>();
             productPrices = new List<ProductPrice>();
             this.ProductName = ProductName;
@@ -48,48 +48,6 @@ namespace WarehouseAPI.Domain.ProductAggregate
             productDiscountPrices.Add(productDiscountPrice);
         }
 
-        //public void Update(string ProductName, ProductType ProductType, string? Description, int Quantity)
-        //{
-        //    if (ProductName != null || ProductName != string.Empty)
-        //        throw new ArgumentOutOfRangeException("The Product name must not be empty.");
-        //    this.ProductName = ProductName;
-        //    this.ProductType = ProductType;
-        //    this.Description = Description;
-        //    this.Quantity = Quantity;
-        //}
-        //public void UpdatePrice(decimal  Price)
-        //{
-        //    if (Price < 1)
-        //        throw new ArgumentOutOfRangeException("The Product price should not be zero.");
-        //    if (!this.IsActive)
-        //        throw new ArgumentOutOfRangeException("The Product is inactive.");
-        //    if (this.Quantity < 1)
-        //        throw new ArgumentOutOfRangeException("The Product quantity is less than one.");
-
-        //    this.Price = Price;
-
-        //}
-        //public void UpdateDiscountedPrice(decimal  DiscountedPrice)
-        //{
-        //    if (Price < 1)
-        //        throw new ArgumentOutOfRangeException("The Product price should not be zero.");
-        //    if (!this.IsActive)
-        //        throw new ArgumentOutOfRangeException("The Product is inactive.");
-        //    if (this.Quantity < 1)
-        //        throw new ArgumentOutOfRangeException("The Product quantity is less than one.");
-
-        //    this.DiscountedPrice = DiscountedPrice;
-        //}
-        //public void IsActiveProduct()
-        //{
-        //    if (this.Quantity < 1)
-        //        throw new ArgumentOutOfRangeException("The Product quantity is less than one.");
-
-        //    this.IsActive = true;
-        //}
-        //public void DeActiveProduct()
-        //{
-        //    this.IsActive = false;
-        //}
+       
     }
 }

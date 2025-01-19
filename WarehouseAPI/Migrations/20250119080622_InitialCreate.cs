@@ -18,14 +18,14 @@ namespace WarehouseAPI.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     ProductName = table.Column<string>(type: "TEXT", nullable: true),
                     ProductType = table.Column<int>(type: "INTEGER", nullable: false),
+                    CompanyName = table.Column<string>(type: "TEXT", nullable: true),
+                    CompanyAddress = table.Column<string>(type: "TEXT", nullable: true),
+                    CompanyPhone = table.Column<string>(type: "TEXT", nullable: true),
+                    CompanyEmail = table.Column<string>(type: "TEXT", nullable: true),
+                    MadeCountry = table.Column<string>(type: "TEXT", nullable: true),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    CreateDatetime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CompanyInformation_CompanyAddress = table.Column<string>(type: "TEXT", nullable: true,name: "CompanyAddress"),
-                    CompanyInformation_CompanyEmail = table.Column<string>(type: "TEXT", nullable: true, name: "CompanyEmail"),
-                    CompanyInformation_CompanyName = table.Column<string>(type: "TEXT", nullable: true, name: "CompanyName"),
-                    CompanyInformation_CompanyPhone = table.Column<string>(type: "TEXT", nullable: true, name: "CompanyPhone"),
-                    CompanyInformation_MadeCountry = table.Column<string>(type: "TEXT", nullable: true, name: "MadeCountry")
+                    CreateDatetime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
