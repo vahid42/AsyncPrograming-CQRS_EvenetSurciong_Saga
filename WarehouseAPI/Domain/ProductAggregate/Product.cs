@@ -61,7 +61,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
             return "P" + number.ToString();
         }
 
-        public async void IsActiveProduct()
+        public async void ActiveProduct()
         {
             this.IsActive = true;
             var _code = generateCode();

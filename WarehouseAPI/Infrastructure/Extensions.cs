@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics.Tracing;
 using System.Reflection;
 using WarehouseAPI.Application.Commands.CommandHandlers;
- 
+using WarehouseAPI.Application.Queries.QueryHandlers;
+
 namespace WarehouseAPI.Infrastructure
 {
     public static class Extensions
@@ -48,9 +49,7 @@ namespace WarehouseAPI.Infrastructure
                 {
                     IsClass: true,
                     IsAbstract: false
-                } &&
-                               type.GetInterfaces()
-                                   .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeToScanFor));
+                } && type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeToScanFor));
         }
 
 

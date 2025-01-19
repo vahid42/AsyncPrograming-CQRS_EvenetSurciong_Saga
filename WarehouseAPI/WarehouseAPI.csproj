@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Queries\QueryHandlers\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

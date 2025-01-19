@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WarehouseAPI.Application.Commands;
 using WarehouseAPI.Application.Commands.CommandHandlers;
-using WarehouseAPI.Comman.DtoInput;
-using WarehouseAPI.Domain.ProductAggregate;
+using WarehouseAPI.Comman.Dtos;
 
 namespace WarehouseAPI.Controllers
 {
@@ -11,28 +10,13 @@ namespace WarehouseAPI.Controllers
     public class ProductController : ControllerBase
     {
 
+        [HttpPost]
+        public async Task<IActionResult> CreateOrders([FromBody] CreateProductDto productDto, [FromServices] ICommandHandler<CreateProductCommand, CreateProductDto> commandHandler )
+        {
+            var dd = await commandHandler.HandleAsync(new CreateProductCommand(productDto));
+            return Ok(dd);
+        }
 
-        //[HttpGet("GetProducts")]
-        //public async Task<IActionResult> GetProducts([FromBody] RequestGetProductDto dto)
-        //{
-        //    return Ok();
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> CreateOrders([FromBody] CreateProductInDto createProductInDto, [FromServices] ICommandHandler<CreateProductCommand, ProductDto> commandHandler)
-        //{
-
-        //    var dd = await commandHandler.HandleAsync(new CreateProductCommand(createProductInDto));
-        //    return Ok(dd);
-        //}
-
-        //[HttpPost]
-        //public async Task<IActionResult> CreateOrders([FromBody] CreateProductInDto createProductInDto, [FromServices] ICommandHandler<CreateProductCommand, ProductDto> commandHandler)
-        //{
-
-        //    var dd = await commandHandler.HandleAsync(new CreateProductCommand(createProductInDto));
-        //    return Ok(dd);
-        //}
 
 
     }

@@ -35,7 +35,7 @@ namespace WarehouseAPI.Infrastructure.Repository
 
         async Task<Product?> IWarehouseRepository<Product>.GetByCodeAsync(string Code)
         {
-            return await context.Products.Where(c => c.Equals(Code)).FirstOrDefaultAsync();
+            return await context.Products.Where(c => c.ProductCode== Code).FirstOrDefaultAsync();
         }
 
         async Task<Product?> IWarehouseRepository<Product>.GetByIdAsync(Guid Id)
