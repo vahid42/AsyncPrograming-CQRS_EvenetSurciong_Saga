@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\Dtos\**" />
+    <Content Remove="Application\Dtos\**" />
+    <EmbeddedResource Remove="Application\Dtos\**" />
+    <None Remove="Application\Dtos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
@@ -23,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Dtos\" />
     <Folder Include="Application\Queries\QueryHandlers\" />
     <Folder Include="Migrations\" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 
+using WarehouseAPI.Domain.DomainService;
 using WarehouseAPI.Domain.ProductAggregate;
 using WarehouseAPI.Domain.Repositories;
 using WarehouseAPI.Infrastructure.Data;
@@ -20,7 +21,7 @@ namespace WarehouseAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<WarehousesDbContext>();
             builder.Services.AddScoped<IWarehouseRepository<Product>, ProductRepository>();
-            
+            builder.Services.AddScoped<IProductDomainService, ProductDomainService>()
 
             var app = builder.Build();
 
