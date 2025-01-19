@@ -25,7 +25,6 @@
   <ItemGroup>
     <Folder Include="Application\Dtos\" />
     <Folder Include="Application\Queries\QueryHandlers\" />
-    <Folder Include="Domain\Repositories\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

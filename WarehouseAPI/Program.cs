@@ -1,5 +1,8 @@
 
+using WarehouseAPI.Domain.ProductAggregate;
+using WarehouseAPI.Domain.Repositories;
 using WarehouseAPI.Infrastructure.Data;
+using WarehouseAPI.Infrastructure.Repository;
 
 namespace WarehouseAPI
 {
@@ -16,6 +19,7 @@ namespace WarehouseAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<WarehousesDbContext>();
+            builder.Services.AddScoped<IWarehouseRepository<Product>, ProductRepository>();
             
 
             var app = builder.Build();
