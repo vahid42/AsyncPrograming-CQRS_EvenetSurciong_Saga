@@ -1,4 +1,5 @@
 ﻿using WarehouseAPI.Domain.Base;
+using WarehouseAPI.Domain.DomainService;
 
 namespace WarehouseAPI.Domain.ProductAggregate
 {
@@ -9,6 +10,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
         /// </summary>
         private readonly List<ProductPrice> productPrices;
         private readonly List<ProductDiscountPrice> productDiscountPrices;
+        private readonly IProductDomainService domainService;
 
         public string? ProductName { get; protected set; }
         public string? ProductCode { get; protected set; }
@@ -20,10 +22,11 @@ namespace WarehouseAPI.Domain.ProductAggregate
         public IReadOnlyCollection<ProductPrice> ProductPrices => productPrices.AsReadOnly();//add an agent will cause an error
         public IReadOnlyCollection<ProductDiscountPrice> ProductDiscountPrices => productDiscountPrices.AsReadOnly();
         private Product() { }
-        public Product(string ProductName, ProductType ProductType, string? Description, CompanyInformation companyInformation)
+        public Product(string ProductName, ProductType ProductType, string? Description, CompanyInformation companyInformation, IProductDomainService domainService)
         {
             if (ProductName == null || ProductName == string.Empty)
                 throw new ArgumentOutOfRangeException("The Product name must not be empty.");
+
 
             Id = Guid.NewGuid();
             CreateDatetime = DateTime.Now;
@@ -33,6 +36,8 @@ namespace WarehouseAPI.Domain.ProductAggregate
             this.ProductType = ProductType;
             this.Description = Description;
             CompanyInformation = companyInformation;
+            this.domainService = domainService;
+
         }
 
         public void AddProductPrice(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity)
@@ -48,6 +53,30 @@ namespace WarehouseAPI.Domain.ProductAggregate
             productDiscountPrices.Add(productDiscountPrice);
         }
 
-       
+
+        private string generateCode()
+        {
+            Random rnd = new Random();
+            int number = rnd.Next(1, 650);
+            return "P" + number.ToString();
+        }
+
+        public async void IsActiveProduct()
+        {
+            this.IsActive = true;
+            var _code = generateCode();
+            while (true)
+            {
+                var codeexist = await domainService.DuplicateCodeCheck(_code);
+                if (!codeexist)
+                {
+                    ProductCode = _code;
+                    break; 
+                }
+            }
+
+        }
+
+
     }
 }
