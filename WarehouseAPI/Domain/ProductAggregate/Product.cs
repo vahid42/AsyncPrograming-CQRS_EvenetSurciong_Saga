@@ -11,7 +11,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
         private readonly List<ProductDiscountPrice> productDiscountPrices;
 
         public string? ProductName { get; protected set; }
-        public string? ProductCobde { get; protected set; }
+        public string? ProductCode { get; protected set; }
         public ProductType ProductType { get; protected set; }
         public CompanyInformation CompanyInformation { get; protected set; }
         public bool IsActive { get; protected set; }
