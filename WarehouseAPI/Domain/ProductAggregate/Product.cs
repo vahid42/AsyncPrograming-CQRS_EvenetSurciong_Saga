@@ -1,4 +1,5 @@
-﻿using WarehouseAPI.Domain.Base;
+﻿using System.Runtime.CompilerServices;
+using WarehouseAPI.Domain.Base;
 using WarehouseAPI.Domain.DomainService;
 
 namespace WarehouseAPI.Domain.ProductAggregate
@@ -21,8 +22,12 @@ namespace WarehouseAPI.Domain.ProductAggregate
         public IReadOnlyCollection<ProductPrice> ProductPrices => productPrices.AsReadOnly();//add an agent will cause an error
         public IReadOnlyCollection<ProductDiscountPrice> ProductDiscountPrices => productDiscountPrices.AsReadOnly();
 
-        private Product() { }
-       
+        private Product()
+        {
+            productPrices = new List<ProductPrice>();
+            productDiscountPrices = new List<ProductDiscountPrice>();
+        }
+
         private Product(string ProductName, string UniversalProductCode, ProductType ProductType, string? Description, CompanyInformation companyInformation)
         {
             Id = Guid.NewGuid();
@@ -35,6 +40,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
             this.Description = Description;
             CompanyInformation = companyInformation;
         }
+
 
         public static async Task<Product> CreateAsync(string productName, string universalProductCode, ProductType productType, string? description, CompanyInformation companyInformation, IProductDomainService domainService)
         {
@@ -51,10 +57,37 @@ namespace WarehouseAPI.Domain.ProductAggregate
             return new Product(productName, universalProductCode, productType, description, companyInformation);
         }
 
-        public void AddProductPrice(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity)
+        public void UpdateAsync(string productName, ProductType productType, string? description, CompanyInformation companyInformation)
         {
+            if (string.IsNullOrWhiteSpace(productName))
+                throw new ArgumentOutOfRangeException("The Product name must not be empty.");
+
+
+            this.ProductName = productName;
+            this.ProductType = productType;
+            this.Description = description;
+            this.CompanyInformation = companyInformation;
+
+        }
+
+        public async void AddProductPrice(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity, IProductDomainService domainService)
+        {
+            bool exist = await domainService.ActiveCurrentProductPrice(UniversalProductCode);
+            if (exist)
+                throw new ArgumentException("The Product Price is already exists.");
+
             var productPrice = new ProductPrice(PurchasePrice, PercentageProfitPrice, Quantity, this);
             productPrices.Add(productPrice);
+        }
+
+        public void UpdateProductPrice(decimal newPurchasePrice, decimal newPercentageProfitPrice, int newQuantity)
+        {
+            var currentPrice = productPrices.FirstOrDefault(p => p.IsActive);
+            if (currentPrice != null)
+                currentPrice.Deactivate();
+           
+            var newProductPrice = new ProductPrice(newPurchasePrice, newPercentageProfitPrice, newQuantity, this);
+            productPrices.Add(newProductPrice);
         }
 
         public void AddProductDiscountPrice(DateTime StartDiscount, DateTime EndDiscount, decimal DiscountPercentage)
