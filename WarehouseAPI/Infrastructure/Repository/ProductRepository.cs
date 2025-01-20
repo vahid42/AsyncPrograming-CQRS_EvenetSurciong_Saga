@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WarehouseAPI.Domain.ProductAggregate;
 using WarehouseAPI.Domain.Repositories;
 using WarehouseAPI.Infrastructure.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WarehouseAPI.Infrastructure.Repository
 {
@@ -35,7 +36,11 @@ namespace WarehouseAPI.Infrastructure.Repository
 
         async Task<Product?> IWarehouseRepository<Product>.GetByCodeAsync(string Code)
         {
-            return await context.Products.Where(c => c.UniversalProductCode== Code).FirstOrDefaultAsync();
+            return await context.Products
+             .Include(p => p.ProductPrices)
+             .Include(p => p.ProductDiscountPrices)
+             .FirstOrDefaultAsync(p => p.UniversalProductCode == Code);
+
         }
 
         async Task<Product?> IWarehouseRepository<Product>.GetByIdAsync(Guid Id)
