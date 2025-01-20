@@ -1,21 +1,24 @@
-﻿using WarehouseAPI.Comman.Dtos;
+﻿using AutoMapper;
+using WarehouseAPI.Comman.Dtos;
 using WarehouseAPI.Domain.DomainService;
 using WarehouseAPI.Domain.ProductAggregate;
 using WarehouseAPI.Domain.Repositories;
 
 namespace WarehouseAPI.Application.Commands.CommandHandlers
 {
-    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductDto>
+    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, ResponseCreateOrUpdateProductDto>
     {
         private readonly IWarehouseRepository<Product> repository;
         private readonly IProductDomainService domainService;
+        private readonly IMapper mapper;
 
-        public CreateProductCommandHandler(IWarehouseRepository<Product> repository, IProductDomainService domainService)
+        public CreateProductCommandHandler(IWarehouseRepository<Product> repository, IProductDomainService domainService, IMapper mapper)
         {
             this.repository = repository;
             this.domainService = domainService;
+            this.mapper = mapper;
         }
-        public async Task<CreateProductDto> HandleAsync(CreateProductCommand command)
+        public async Task<ResponseCreateOrUpdateProductDto> HandleAsync(CreateProductCommand command)
         {
             var companyInformation = new CompanyInformation(command.CreateProductDto.CompanyInformation.CompanyName, command.CreateProductDto.CompanyInformation.CompanyAddress,
                 command.CreateProductDto.CompanyInformation.CompanyPhone, command.CreateProductDto.CompanyInformation.CompanyEmail, command.CreateProductDto.CompanyInformation.MadeCountry);
@@ -26,7 +29,9 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
             product.ActiveProduct();
 
             var result = await repository.AddAsync(product);
-            return command.CreateProductDto;
+            var response = mapper.Map<ResponseCreateOrUpdateProductDto>(command.CreateProductDto);
+            response.Id = result.Id;
+            return response;
         }
     }
 }

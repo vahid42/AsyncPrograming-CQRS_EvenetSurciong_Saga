@@ -25,7 +25,7 @@ namespace WarehouseAPI
             builder.Services.AddScoped<IProductDomainService, ProductDomainService>();
             builder.Services.AddCommandHandlers(typeof(Program));
             builder.Services.AddQueryHandlers(typeof(Program));
-
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

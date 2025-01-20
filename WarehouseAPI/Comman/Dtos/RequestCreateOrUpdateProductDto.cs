@@ -2,7 +2,7 @@
 
 namespace WarehouseAPI.Comman.Dtos
 {
-    public class CreateProductDto
+    public class RequestCreateOrUpdateProductDto
     {
         public string? ProductName { get; set; }
         public string? UniversalProductCode { get; set; }

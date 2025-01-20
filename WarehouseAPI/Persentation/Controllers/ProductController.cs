@@ -11,7 +11,7 @@ namespace WarehouseAPI.Controllers
     {
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrders([FromBody] CreateProductDto productDto, [FromServices] ICommandHandler<CreateProductCommand, CreateProductDto> commandHandler )
+        public async Task<IActionResult> CreateOrders([FromBody] RequestCreateOrUpdateProductDto productDto, [FromServices] ICommandHandler<CreateProductCommand, ResponseCreateOrUpdateProductDto> commandHandler )
         {
             var dd = await commandHandler.HandleAsync(new CreateProductCommand(productDto));
             return Ok(dd);
