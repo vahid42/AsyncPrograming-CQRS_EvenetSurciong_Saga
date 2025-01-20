@@ -39,17 +39,20 @@ namespace WarehouseAPI.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
-            modelBuilder.Entity<ProductDiscountPrice>().HasKey(p => p.Id);
-            modelBuilder.Entity<ProductPrice>().HasKey(p => p.Id);
-            modelBuilder.Entity<Product>()
-            .HasMany<ProductDiscountPrice>()
-            .WithOne(p => p.Product)
-            .HasForeignKey(p => p.ProductId);
+            modelBuilder.Entity<ProductDiscountPrice>().HasKey(pdp => pdp.Id);
+            modelBuilder.Entity<ProductPrice>().HasKey(pp => pp.Id);
 
             modelBuilder.Entity<Product>()
-           .HasMany<ProductPrice>()
-           .WithOne(p => p.Product)
-           .HasForeignKey(p => p.ProductId);
+            .HasMany(p => p.ProductPrices) // موجودیت اول: Product  
+            .WithOne(pp => pp.Product) // موجودیت دوم: ProductPrice  
+            .HasForeignKey(pp => pp.ProductId) // کلید خارجی در موجودیت دوم  
+            .OnDelete(DeleteBehavior.Cascade);   
+
+            modelBuilder.Entity<Product>()
+            .HasMany(p=>p.ProductDiscountPrices)
+            .WithOne(pdp => pdp.Product)
+            .HasForeignKey(pdp => pdp.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
 
 
 
