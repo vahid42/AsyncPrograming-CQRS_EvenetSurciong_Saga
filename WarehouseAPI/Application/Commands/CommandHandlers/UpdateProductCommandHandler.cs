@@ -21,7 +21,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
         public async Task<ResponseCreateOrUpdateProductDto> HandleAsync(UpdateProductCommand command)
         {
 
-            var product = await repository.GetByCodeAsync(command.UpdateProductDto.UniversalProductCode)
+            var product = await repository.GetByCodeAsync(command.UpdateProductDto.UniversalProductCode);
                 if (product == null)
                 throw new KeyNotFoundException($"Product with ID {command.UpdateProductDto.UniversalProductCode} not found.");
 
