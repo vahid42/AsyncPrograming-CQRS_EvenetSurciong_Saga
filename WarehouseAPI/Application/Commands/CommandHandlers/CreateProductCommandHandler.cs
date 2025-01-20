@@ -26,20 +26,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
             product.ActiveProduct();
 
             var result = await repository.AddAsync(product);
-
-
-            var createProductDto = new CreateProductDto()
-            {
-                ProductName = result.ProductName
-            };
-
-
-
-            return createProductDto;
-
-
-
-
+            return command.CreateProductDto;
         }
     }
 }

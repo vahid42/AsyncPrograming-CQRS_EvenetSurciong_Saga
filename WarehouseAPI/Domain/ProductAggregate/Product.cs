@@ -10,7 +10,6 @@ namespace WarehouseAPI.Domain.ProductAggregate
         /// </summary>
         private readonly List<ProductPrice> productPrices;
         private readonly List<ProductDiscountPrice> productDiscountPrices;
-        private readonly IProductDomainService domainService;
 
         public string? ProductName { get; protected set; }
         public string? UniversalProductCode { get; protected set; }
