@@ -5,6 +5,7 @@ namespace WarehouseAPI.Comman.Dtos
     public class CreateProductDto
     {
         public string? ProductName { get; set; }
+        public string? UniversalProductCode { get; set; }
         public ProductType ProductType { get; set; }
         public string? Description { get;  set; }
 

@@ -17,6 +17,7 @@ namespace WarehouseAPI.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     ProductName = table.Column<string>(type: "TEXT", nullable: true),
+                    UniversalProductCode = table.Column<string>(type: "TEXT", nullable: true),
                     ProductType = table.Column<int>(type: "INTEGER", nullable: false),
                     CompanyName = table.Column<string>(type: "TEXT", nullable: true),
                     CompanyAddress = table.Column<string>(type: "TEXT", nullable: true),
@@ -43,8 +44,7 @@ namespace WarehouseAPI.Migrations
                     OrginalPrice = table.Column<decimal>(type: "TEXT", nullable: false),
                     FinalPriceWithDiscount = table.Column<decimal>(type: "TEXT", nullable: false),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductId1 = table.Column<Guid>(type: "TEXT", nullable: true)
+                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,11 +55,6 @@ namespace WarehouseAPI.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductDiscountPrices_Products_ProductId1",
-                        column: x => x.ProductId1,
-                        principalTable: "Products",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -73,8 +68,7 @@ namespace WarehouseAPI.Migrations
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     RemainingQuantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductId1 = table.Column<Guid>(type: "TEXT", nullable: true)
+                    ProductId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,11 +79,6 @@ namespace WarehouseAPI.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductPrices_Products_ProductId1",
-                        column: x => x.ProductId1,
-                        principalTable: "Products",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -98,19 +87,9 @@ namespace WarehouseAPI.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductDiscountPrices_ProductId1",
-                table: "ProductDiscountPrices",
-                column: "ProductId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductPrices_ProductId",
                 table: "ProductPrices",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductPrices_ProductId1",
-                table: "ProductPrices",
-                column: "ProductId1");
         }
 
         /// <inheritdoc />

@@ -29,7 +29,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
             IsActive = true;
             Product = product;
             ProductId = Product.Id;
-            FinalPrice = PurchasePrice * PercentageProfitPrice;
+            FinalPrice = (PurchasePrice * PercentageProfitPrice)/100+ PurchasePrice;
 
         }
 

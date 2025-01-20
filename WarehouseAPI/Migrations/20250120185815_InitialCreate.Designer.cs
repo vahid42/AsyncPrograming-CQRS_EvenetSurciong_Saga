@@ -11,8 +11,8 @@ using WarehouseAPI.Infrastructure.Data;
 namespace WarehouseAPI.Migrations
 {
     [DbContext(typeof(WarehousesDbContext))]
-    [Migration("20250119110752_InitialCreate1")]
-    partial class InitialCreate1
+    [Migration("20250120185815_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,14 +35,14 @@ namespace WarehouseAPI.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ProductCode")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("ProductName")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ProductType")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("UniversalProductCode")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -73,17 +73,12 @@ namespace WarehouseAPI.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ProductId1")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("StartDiscount")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductId1");
 
                     b.ToTable("ProductDiscountPrices");
                 });
@@ -106,9 +101,6 @@ namespace WarehouseAPI.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ProductId1")
-                        .HasColumnType("TEXT");
-
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("TEXT");
 
@@ -121,8 +113,6 @@ namespace WarehouseAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductId1");
 
                     b.ToTable("ProductPrices");
                 });
@@ -169,14 +159,10 @@ namespace WarehouseAPI.Migrations
             modelBuilder.Entity("WarehouseAPI.Domain.ProductAggregate.ProductDiscountPrice", b =>
                 {
                     b.HasOne("WarehouseAPI.Domain.ProductAggregate.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductDiscountPrices")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("WarehouseAPI.Domain.ProductAggregate.Product", null)
-                        .WithMany("ProductDiscountPrices")
-                        .HasForeignKey("ProductId1");
 
                     b.Navigation("Product");
                 });
@@ -184,14 +170,10 @@ namespace WarehouseAPI.Migrations
             modelBuilder.Entity("WarehouseAPI.Domain.ProductAggregate.ProductPrice", b =>
                 {
                     b.HasOne("WarehouseAPI.Domain.ProductAggregate.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductPrices")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("WarehouseAPI.Domain.ProductAggregate.Product", null)
-                        .WithMany("ProductPrices")
-                        .HasForeignKey("ProductId1");
 
                     b.Navigation("Product");
                 });

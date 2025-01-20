@@ -13,7 +13,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
         private readonly IProductDomainService domainService;
 
         public string? ProductName { get; protected set; }
-        public string? ProductCode { get; protected set; }
+        public string? UniversalProductCode { get; protected set; }
         public ProductType ProductType { get; protected set; }
         public CompanyInformation CompanyInformation { get; protected set; }
         public bool IsActive { get; protected set; }
@@ -21,23 +21,35 @@ namespace WarehouseAPI.Domain.ProductAggregate
         public DateTime CreateDatetime { get; private set; }
         public IReadOnlyCollection<ProductPrice> ProductPrices => productPrices.AsReadOnly();//add an agent will cause an error
         public IReadOnlyCollection<ProductDiscountPrice> ProductDiscountPrices => productDiscountPrices.AsReadOnly();
+
         private Product() { }
-        public Product(string ProductName, ProductType ProductType, string? Description, CompanyInformation companyInformation, IProductDomainService domainService)
+       
+        private Product(string ProductName, string UniversalProductCode, ProductType ProductType, string? Description, CompanyInformation companyInformation)
         {
-            if (ProductName == null || ProductName == string.Empty)
-                throw new ArgumentOutOfRangeException("The Product name must not be empty.");
-
-
             Id = Guid.NewGuid();
             CreateDatetime = DateTime.Now;
             productDiscountPrices = new List<ProductDiscountPrice>();
             productPrices = new List<ProductPrice>();
             this.ProductName = ProductName;
+            this.UniversalProductCode = UniversalProductCode;
             this.ProductType = ProductType;
             this.Description = Description;
             CompanyInformation = companyInformation;
-            this.domainService = domainService;
+        }
 
+        public static async Task<Product> CreateAsync(string productName, string universalProductCode, ProductType productType, string? description, CompanyInformation companyInformation, IProductDomainService domainService)
+        {
+            if (string.IsNullOrWhiteSpace(productName))
+                throw new ArgumentOutOfRangeException("The Product name must not be empty.");
+
+            if (string.IsNullOrWhiteSpace(universalProductCode))
+                throw new ArgumentOutOfRangeException("The Universal Product Code must not be empty.");
+
+            bool codeExist = await domainService.DuplicateCodeCheck(universalProductCode);
+            if (codeExist)
+                throw new ArgumentException("The Universal Product Code already exists.");
+
+            return new Product(productName, universalProductCode, productType, description, companyInformation);
         }
 
         public void AddProductPrice(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity)
@@ -54,26 +66,9 @@ namespace WarehouseAPI.Domain.ProductAggregate
         }
 
 
-        private string generateCode()
-        {
-            Random rnd = new Random();
-            int number = rnd.Next(1, 650);
-            return "P" + number.ToString();
-        }
-
-        public async void ActiveProduct()
+        public void ActiveProduct()
         {
             this.IsActive = true;
-            var _code = generateCode();
-            while (true)
-            {
-                var codeexist = await domainService.DuplicateCodeCheck(_code);
-                if (!codeexist)
-                {
-                    ProductCode = _code;
-                    break; 
-                }
-            }
 
         }
 
