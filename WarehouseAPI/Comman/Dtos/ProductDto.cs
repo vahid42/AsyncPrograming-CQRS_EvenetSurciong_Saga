@@ -5,7 +5,7 @@ namespace WarehouseAPI.Comman.Dtos
     public class ProductDto
     {
         public string? ProductName { get; set; }
-        public string? ProductCobde { get; set; }
+        public string? GetByCodeAsync { get; set; }
         public ProductType ProductType { get; set; }
         public CompanyInformationDto CompanyInformation { get; protected set; }
         public bool IsActive { get; set; }

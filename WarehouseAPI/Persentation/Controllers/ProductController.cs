@@ -11,11 +11,18 @@ namespace WarehouseAPI.Controllers
     {
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrders([FromBody] RequestCreateOrUpdateProductDto productDto, [FromServices] ICommandHandler<CreateProductCommand, ResponseCreateOrUpdateProductDto> commandHandler )
+        public async Task<IActionResult> CreateProduct([FromBody] RequestCreateOrUpdateProductDto productDto, [FromServices] ICommandHandler<CreateProductCommand, ResponseCreateOrUpdateProductDto> commandHandler )
         {
             var dd = await commandHandler.HandleAsync(new CreateProductCommand(productDto));
             return Ok(dd);
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct([FromBody] RequestCreateOrUpdateProductDto productDto, [FromServices] ICommandHandler<UpdateProductCommand, ResponseCreateOrUpdateProductDto> commandHandler)
+        {
+            var dd = await commandHandler.HandleAsync(new UpdateProductCommand(productDto));
+            return Ok(dd);
+        }
+
 
 
 
