@@ -22,7 +22,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
         {
 
             var product = await repository.GetByCodeAsync(command.UpdateProductDto.UniversalProductCode);
-                if (product == null)
+            if (product == null)
                 throw new KeyNotFoundException($"Product with ID {command.UpdateProductDto.UniversalProductCode} not found.");
 
             var companyInformation = new CompanyInformation(
@@ -32,13 +32,15 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
                 command.UpdateProductDto.CompanyInformation.CompanyEmail,
                 command.UpdateProductDto.CompanyInformation.MadeCountry
             );
+
+
             product.UpdateAsync(command.UpdateProductDto.ProductName, command.UpdateProductDto.ProductType, command.UpdateProductDto.Description, companyInformation);
-
             product.UpdateProductPrice(command.UpdateProductDto.PurchasePrice, command.UpdateProductDto.PercentageProfitPrice, command.UpdateProductDto.Quantity);
-
             await repository.UpdateAsync(product);
+            var response = mapper.Map<ResponseCreateOrUpdateProductDto>(command.UpdateProductDto);
+            response.Id = product.Id;
 
-            var response = mapper.Map<ResponseCreateOrUpdateProductDto>(product);
+
             return response;
         }
     }
