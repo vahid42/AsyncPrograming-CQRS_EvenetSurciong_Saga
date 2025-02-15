@@ -1,11 +1,11 @@
-﻿using WarehouseAPI.Comman.Dtos;
+﻿using WarehouseAPI.Comman.Dtos.Create;
 
 namespace WarehouseAPI.Application.Commands
 {
-    public class CreateProductCommand : ICommand<ResponseCreateOrUpdateProductDto>
+    public class CreateProductCommand : ICommand<ResponseCreateProductDto>
     {
-        public RequestCreateOrUpdateProductDto CreateProductDto { get;}
-        public CreateProductCommand(RequestCreateOrUpdateProductDto createProductDto)
+        public RequestCreateProductDto CreateProductDto { get;}
+        public CreateProductCommand(RequestCreateProductDto createProductDto)
         {
             CreateProductDto = createProductDto;
         }

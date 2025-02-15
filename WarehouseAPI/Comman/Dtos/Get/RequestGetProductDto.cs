@@ -1,6 +1,6 @@
 ﻿using WarehouseAPI.Domain.ProductAggregate;
 
-namespace WarehouseAPI.Comman.Dtos
+namespace WarehouseAPI.Comman.Dtos.Get
 {
     public class RequestGetProductDto
     {

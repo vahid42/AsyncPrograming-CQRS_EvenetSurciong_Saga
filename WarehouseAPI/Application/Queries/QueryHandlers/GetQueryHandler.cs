@@ -1,4 +1,4 @@
-﻿using WarehouseAPI.Comman.Dtos;
+﻿using WarehouseAPI.Comman.Dtos.Get;
 using WarehouseAPI.Domain.ProductAggregate;
 using WarehouseAPI.Domain.Repositories;
 
@@ -20,14 +20,16 @@ namespace WarehouseAPI.Application.Queries.QueryHandlers
 
             if (result != null)
             {
+                response.Id = result.Id;
                 response.UniversalProductCode = result.UniversalProductCode;
                 response.ProductName = result.ProductName;
+                response.ProductType = result.ProductType;
+                response.Description = result.Description;
                 response.CompanyInformation.CompanyName = result.CompanyInformation.CompanyName;
                 response.CompanyInformation.CompanyPhone = result.CompanyInformation.CompanyPhone;
                 response.CompanyInformation.CompanyAddress = result.CompanyInformation.CompanyAddress;
                 response.CompanyInformation.CompanyEmail = result.CompanyInformation.CompanyEmail;
                 response.CompanyInformation.MadeCountry = result.CompanyInformation.MadeCountry;
-                response.Id = result.Id;
                 var price = result.ProductPrices.FirstOrDefault(c => c.IsActive);
                 if (price != null)
                 {

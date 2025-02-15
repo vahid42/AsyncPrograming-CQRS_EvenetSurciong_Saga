@@ -1,4 +1,4 @@
-﻿using WarehouseAPI.Comman.Dtos;
+﻿using WarehouseAPI.Comman.Dtos.Get;
 
 namespace WarehouseAPI.Application.Queries
 {

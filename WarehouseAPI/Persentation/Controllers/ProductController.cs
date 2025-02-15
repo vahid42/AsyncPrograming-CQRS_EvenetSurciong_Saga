@@ -3,7 +3,9 @@ using WarehouseAPI.Application.Commands;
 using WarehouseAPI.Application.Commands.CommandHandlers;
 using WarehouseAPI.Application.Queries;
 using WarehouseAPI.Application.Queries.QueryHandlers;
-using WarehouseAPI.Comman.Dtos;
+using WarehouseAPI.Comman.Dtos.Create;
+using WarehouseAPI.Comman.Dtos.Get;
+using WarehouseAPI.Comman.Dtos.Update;
 
 namespace WarehouseAPI.Controllers
 {
@@ -19,15 +21,16 @@ namespace WarehouseAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody] RequestCreateOrUpdateProductDto productDto, [FromServices] ICommandHandler<CreateProductCommand, ResponseCreateOrUpdateProductDto> commandHandler )
+        public async Task<IActionResult> CreateProduct([FromBody] RequestCreateProductDto productDto, [FromServices] ICommandHandler<CreateProductCommand, ResponseCreateProductDto> commandHandler)
         {
             var dd = await commandHandler.HandleAsync(new CreateProductCommand(productDto));
             return Ok(dd);
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateProduct([FromBody] RequestCreateOrUpdateProductDto productDto, [FromServices] ICommandHandler<UpdateProductCommand, ResponseCreateOrUpdateProductDto> commandHandler)
+        [HttpPatch("UpdateProductInfo/{Code}")]
+        public async Task<IActionResult> UpdateProductInfo( string Code ,[FromBody] RequestUpdateProductInfoDto productDto, [FromServices] ICommandHandler<UpdateProductInfoCommand, ResponseUpdateInfoProductDto> commandHandler)
         {
-            var dd = await commandHandler.HandleAsync(new UpdateProductCommand(productDto));
+            productDto.UniversalProductCode = Code;
+            var dd = await commandHandler.HandleAsync(new UpdateProductInfoCommand(productDto));
             return Ok(dd);
         }
 

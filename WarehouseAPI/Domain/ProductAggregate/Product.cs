@@ -54,20 +54,22 @@ namespace WarehouseAPI.Domain.ProductAggregate
             if (codeExist)
                 throw new ArgumentException("The Universal Product Code already exists.");
 
+            if(productType==ProductType.None)
+                throw new ArgumentOutOfRangeException("The Product ProductType must not be None.");
+
             return new Product(productName, universalProductCode, productType, description, companyInformation);
         }
 
         public void UpdateAsync(string productName, ProductType productType, string? description, CompanyInformation companyInformation)
         {
-            if (string.IsNullOrWhiteSpace(productName))
-                throw new ArgumentOutOfRangeException("The Product name must not be empty.");
-
-
-            this.ProductName = productName;
-            this.ProductType = productType;
-            this.Description = description;
-            this.CompanyInformation = companyInformation;
-
+            if (!string.IsNullOrWhiteSpace(productName))
+                this.ProductName = productName;
+            if (!string.IsNullOrWhiteSpace(description))
+                this.Description = description;
+            if (companyInformation != null)
+                this.CompanyInformation = companyInformation;
+            if (productType != ProductType.None)
+                this.ProductType = productType;
         }
 
         public async void AddProductPrice(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity, IProductDomainService domainService)
@@ -85,7 +87,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
             var currentPrice = productPrices.FirstOrDefault(p => p.IsActive);
             if (currentPrice != null)
                 currentPrice.Deactivate();
-           
+
             var newProductPrice = new ProductPrice(newPurchasePrice, newPercentageProfitPrice, newQuantity, this);
             productPrices.Add(newProductPrice);
         }

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using WarehouseAPI.Comman.Dtos;
+using WarehouseAPI.Comman.Dtos.Create;
 using WarehouseAPI.Domain.DomainService;
 using WarehouseAPI.Domain.ProductAggregate;
 using WarehouseAPI.Domain.Repositories;
 
 namespace WarehouseAPI.Application.Commands.CommandHandlers
 {
-    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, ResponseCreateOrUpdateProductDto>
+    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, ResponseCreateProductDto>
     {
         private readonly IWarehouseRepository<Product> repository;
         private readonly IProductDomainService domainService;
@@ -18,7 +18,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
             this.domainService = domainService;
             this.mapper = mapper;
         }
-        public async Task<ResponseCreateOrUpdateProductDto> HandleAsync(CreateProductCommand command)
+        public async Task<ResponseCreateProductDto> HandleAsync(CreateProductCommand command)
         {
             var companyInformation = new CompanyInformation(command.CreateProductDto.CompanyInformation.CompanyName, command.CreateProductDto.CompanyInformation.CompanyAddress,
                 command.CreateProductDto.CompanyInformation.CompanyPhone, command.CreateProductDto.CompanyInformation.CompanyEmail, command.CreateProductDto.CompanyInformation.MadeCountry);
@@ -29,7 +29,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
             product.ActiveProduct();
 
             var result = await repository.AddAsync(product);
-            var response = mapper.Map<ResponseCreateOrUpdateProductDto>(command.CreateProductDto);
+            var response = mapper.Map<ResponseCreateProductDto>(command.CreateProductDto);
             response.Id = result.Id;
             return response;
         }

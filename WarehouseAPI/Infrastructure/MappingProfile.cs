@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using WarehouseAPI.Comman.Dtos;
+using WarehouseAPI.Comman.Dtos.Create;
+using WarehouseAPI.Comman.Dtos.Update;
 using WarehouseAPI.Domain.ProductAggregate;
 
 namespace WarehouseAPI
@@ -8,7 +9,7 @@ namespace WarehouseAPI
     {
         public MappingProfile()
         {
-            CreateMap<RequestCreateOrUpdateProductDto, ResponseCreateOrUpdateProductDto>();
+            CreateMap<RequestCreateProductDto, ResponseCreateProductDto>();
         }
     }
 }
