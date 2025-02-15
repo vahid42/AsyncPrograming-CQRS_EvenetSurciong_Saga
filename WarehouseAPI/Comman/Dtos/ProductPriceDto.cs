@@ -8,5 +8,6 @@
         public bool IsActive { get; set; }
         public int Quantity { get; set; }
         public int RemainingQuantity { get; set; }
+
     }
 }

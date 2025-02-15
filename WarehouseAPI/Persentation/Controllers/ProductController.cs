@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WarehouseAPI.Application.Commands;
 using WarehouseAPI.Application.Commands.CommandHandlers;
+using WarehouseAPI.Application.Queries;
+using WarehouseAPI.Application.Queries.QueryHandlers;
 using WarehouseAPI.Comman.Dtos;
 
 namespace WarehouseAPI.Controllers
@@ -9,6 +11,12 @@ namespace WarehouseAPI.Controllers
     [Route("[controller]")]
     public class ProductController : ControllerBase
     {
+        [HttpGet]
+        public async Task<IActionResult> GetProduct([FromQuery] RequestGetProductDto productDto, [FromServices] IQueryHandler<GetProductQuery, ResponseGetProduct> queryHandler)
+        {
+            var dd = await queryHandler.HandleAsync(new GetProductQuery(productDto));
+            return Ok(dd);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] RequestCreateOrUpdateProductDto productDto, [FromServices] ICommandHandler<CreateProductCommand, ResponseCreateOrUpdateProductDto> commandHandler )

@@ -43,6 +43,7 @@ namespace WarehouseAPI.Migrations
                     DiscountPercentage = table.Column<decimal>(type: "TEXT", nullable: false),
                     OrginalPrice = table.Column<decimal>(type: "TEXT", nullable: false),
                     FinalPriceWithDiscount = table.Column<decimal>(type: "TEXT", nullable: false),
+                    CreateDatetime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
@@ -68,6 +69,7 @@ namespace WarehouseAPI.Migrations
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     RemainingQuantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreateDatetime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ProductId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

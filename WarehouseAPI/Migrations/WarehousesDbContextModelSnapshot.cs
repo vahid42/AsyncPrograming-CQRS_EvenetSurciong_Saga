@@ -52,6 +52,9 @@ namespace WarehouseAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreateDatetime")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("DiscountPercentage")
                         .HasColumnType("TEXT");
 
@@ -84,6 +87,9 @@ namespace WarehouseAPI.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreateDatetime")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("FinalPrice")

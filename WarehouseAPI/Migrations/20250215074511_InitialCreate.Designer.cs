@@ -11,7 +11,7 @@ using WarehouseAPI.Infrastructure.Data;
 namespace WarehouseAPI.Migrations
 {
     [DbContext(typeof(WarehousesDbContext))]
-    [Migration("20250120185815_InitialCreate")]
+    [Migration("20250215074511_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -55,6 +55,9 @@ namespace WarehouseAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreateDatetime")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("DiscountPercentage")
                         .HasColumnType("TEXT");
 
@@ -87,6 +90,9 @@ namespace WarehouseAPI.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreateDatetime")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("FinalPrice")

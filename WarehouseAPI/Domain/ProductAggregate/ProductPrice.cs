@@ -10,6 +10,8 @@ namespace WarehouseAPI.Domain.ProductAggregate
         public bool IsActive { get; private set; }
         public int Quantity { get; protected set; }
         public int RemainingQuantity { get; protected set; }
+        public DateTime CreateDatetime { get; protected set; }
+
         public Guid ProductId { get; private set; } // Foreign Key  
         public Product Product { get; private set; } // Navigation property  
 
@@ -26,6 +28,8 @@ namespace WarehouseAPI.Domain.ProductAggregate
             this.PurchasePrice = PurchasePrice;
             this.PercentageProfitPrice = PercentageProfitPrice;
             this.Quantity = Quantity;
+            this.RemainingQuantity = Quantity;
+            CreateDatetime = DateTime.Now;
             IsActive = true;
             Product = product;
             ProductId = Product.Id;

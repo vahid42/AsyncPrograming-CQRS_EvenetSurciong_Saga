@@ -6,9 +6,10 @@ namespace WarehouseAPI.Domain.ProductAggregate
     {
         public DateTime StartDiscount { get; private set; }
         public DateTime EndDiscount { get; private set; }
-        public decimal  DiscountPercentage { get; private set; }
-        public decimal  OrginalPrice { get; private set; }
-        public decimal  FinalPriceWithDiscount { get; private set; }
+        public decimal DiscountPercentage { get; private set; }
+        public decimal OrginalPrice { get; private set; }
+        public decimal FinalPriceWithDiscount { get; private set; }
+        public DateTime CreateDatetime { get; protected set; }
         public bool IsActive { get; private set; }
         public Guid ProductId { get; private set; } // Foreign Key  
         public Product Product { get; private set; } // Navigation property  
@@ -16,7 +17,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
         //for EF
         private ProductDiscountPrice() { }
 
-        public ProductDiscountPrice(decimal  OrginalPrice, DateTime StartDiscount, DateTime EndDiscount, decimal  DiscountPercentage, Product product)
+        public ProductDiscountPrice(decimal OrginalPrice, DateTime StartDiscount, DateTime EndDiscount, decimal DiscountPercentage, Product product)
         {
             if (string.IsNullOrEmpty(product?.Id.ToString()))
                 throw new ArgumentNullException(nameof(product), "Product cannot be null.");
@@ -28,6 +29,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
             this.StartDiscount = StartDiscount;
             this.EndDiscount = EndDiscount;
             this.DiscountPercentage = DiscountPercentage;
+            CreateDatetime = DateTime.Now;
             Product = product;
             ProductId = Product.Id;
             IsActive = true;
@@ -35,10 +37,10 @@ namespace WarehouseAPI.Domain.ProductAggregate
 
         }
 
-        private decimal  CalculateFinalPrice()
+        private decimal CalculateFinalPrice()
         {
-            decimal  discountAmount = DiscountPercentage / 100 * OrginalPrice;
-            decimal  finalPrice = OrginalPrice - discountAmount;
+            decimal discountAmount = DiscountPercentage / 100 * OrginalPrice;
+            decimal finalPrice = OrginalPrice - discountAmount;
             return finalPrice;
         }
 

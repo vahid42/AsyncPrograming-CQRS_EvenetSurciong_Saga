@@ -31,7 +31,10 @@ namespace WarehouseAPI.Infrastructure.Repository
 
         IEnumerable<Product> IWarehouseRepository<Product>.GetAll(Expression<Func<Product, bool>> predicate)
         {
-            return context.Products.Where(predicate);
+            return context.Products
+                .Include(p => p.ProductPrices)
+                .Include(p => p.ProductDiscountPrices)
+                .Where(predicate);
         }
 
         async Task<Product?> IWarehouseRepository<Product>.GetByCodeAsync(string Code)
