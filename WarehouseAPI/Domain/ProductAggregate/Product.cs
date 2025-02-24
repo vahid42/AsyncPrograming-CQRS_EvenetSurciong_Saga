@@ -54,13 +54,13 @@ namespace WarehouseAPI.Domain.ProductAggregate
             if (codeExist)
                 throw new ArgumentException("The Universal Product Code already exists.");
 
-            if(productType==ProductType.None)
+            if (productType == ProductType.None)
                 throw new ArgumentOutOfRangeException("The Product ProductType must not be None.");
 
             return new Product(productName, universalProductCode, productType, description, companyInformation);
         }
 
-        public void UpdateAsync(string productName, ProductType productType, string? description, CompanyInformation companyInformation)
+        public void UpdateInfo(string productName, ProductType productType, string? description, CompanyInformation companyInformation)
         {
             if (!string.IsNullOrWhiteSpace(productName))
                 this.ProductName = productName;
@@ -72,7 +72,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
                 this.ProductType = productType;
         }
 
-        public async void AddProductPrice(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity, IProductDomainService domainService)
+        public async void AddProductPriceAsync(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity, IProductDomainService domainService)
         {
             bool exist = await domainService.ActiveCurrentProductPrice(UniversalProductCode);
             if (exist)

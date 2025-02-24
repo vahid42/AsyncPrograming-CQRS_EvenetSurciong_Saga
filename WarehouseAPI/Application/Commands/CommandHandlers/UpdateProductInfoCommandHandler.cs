@@ -7,7 +7,7 @@ using WarehouseAPI.Domain.Repositories;
 
 namespace WarehouseAPI.Application.Commands.CommandHandlers
 {
-    public class UpdateProductInfoCommandHandler : ICommandHandler<UpdateProductInfoCommand, ResponseUpdateInfoProductDto>
+    public class UpdateProductInfoCommandHandler : ICommandHandler<UpdateProductInfoCommand, ResponseUpdateProductInfoDto>
     {
         private readonly IWarehouseRepository<Product> repository;
         private readonly IProductDomainService domainService;
@@ -19,7 +19,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
             this.domainService = domainService;
             this.mapper = mapper;
         }
-        public async Task<ResponseUpdateInfoProductDto> HandleAsync(UpdateProductInfoCommand command)
+        public async Task<ResponseUpdateProductInfoDto> HandleAsync(UpdateProductInfoCommand command)
         {
 
             var product = await repository.GetByCodeAsync(command.UpdateProductDto.UniversalProductCode);
@@ -28,7 +28,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
 
             if (command.UpdateProductDto.CompanyInformation == null)
             {
-                product.UpdateAsync(command.UpdateProductDto.ProductName, command.UpdateProductDto.ProductType, command.UpdateProductDto.Description, product.CompanyInformation);
+                product.UpdateInfo(command.UpdateProductDto.ProductName, command.UpdateProductDto.ProductType, command.UpdateProductDto.Description, product.CompanyInformation);
 
             }
             else
@@ -40,14 +40,14 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
                     command.UpdateProductDto.CompanyInformation.CompanyEmail,
                     command.UpdateProductDto.CompanyInformation.MadeCountry
                 );
-                product.UpdateAsync(command.UpdateProductDto.ProductName, command.UpdateProductDto.ProductType, command.UpdateProductDto.Description, companyInformation);
+                product.UpdateInfo(command.UpdateProductDto.ProductName, command.UpdateProductDto.ProductType, command.UpdateProductDto.Description, companyInformation);
 
             }
 
             var result = await repository.UpdateAsync(product);
 
 
-            return new ResponseUpdateInfoProductDto()
+            return new ResponseUpdateProductInfoDto()
             {
                 Id = result.Id,
                 ProductType = result.ProductType,

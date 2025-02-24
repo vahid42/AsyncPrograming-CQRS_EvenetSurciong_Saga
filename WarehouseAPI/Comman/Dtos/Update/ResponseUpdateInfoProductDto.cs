@@ -2,7 +2,7 @@
 
 namespace WarehouseAPI.Comman.Dtos.Update
 {
-    public class ResponseUpdateInfoProductDto : RequestUpdateProductInfoDto
+    public class ResponseUpdateProductInfoDto : RequestUpdateProductInfoDto
     {
         public Guid Id { get; set; }
     }

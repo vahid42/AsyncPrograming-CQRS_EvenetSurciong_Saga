@@ -3,7 +3,7 @@ using WarehouseAPI.Comman.Dtos.Update;
 
 namespace WarehouseAPI.Application.Commands
 {
-    public class UpdateProductInfoCommand : ICommand<ResponseUpdateInfoProductDto>
+    public class UpdateProductInfoCommand : ICommand<ResponseUpdateProductInfoDto>
     {
         public RequestUpdateProductInfoDto UpdateProductDto { get;}
         public UpdateProductInfoCommand(RequestUpdateProductInfoDto updateProductDto)

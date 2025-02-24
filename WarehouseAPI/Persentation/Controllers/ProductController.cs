@@ -26,11 +26,19 @@ namespace WarehouseAPI.Controllers
             var dd = await commandHandler.HandleAsync(new CreateProductCommand(productDto));
             return Ok(dd);
         }
-        [HttpPatch("UpdateProductInfo/{Code}")]
-        public async Task<IActionResult> UpdateProductInfo( string Code ,[FromBody] RequestUpdateProductInfoDto productDto, [FromServices] ICommandHandler<UpdateProductInfoCommand, ResponseUpdateInfoProductDto> commandHandler)
+        [HttpPatch("UpdateProductInfo/{UniversalProductCode}")]
+        public async Task<IActionResult> UpdateProductInfo( string UniversalProductCode, [FromBody] RequestUpdateProductInfoDto productDto, [FromServices] ICommandHandler<UpdateProductInfoCommand, ResponseUpdateProductInfoDto> commandHandler)
         {
-            productDto.UniversalProductCode = Code;
+            productDto.UniversalProductCode = UniversalProductCode;
             var dd = await commandHandler.HandleAsync(new UpdateProductInfoCommand(productDto));
+            return Ok(dd);
+        }
+
+        [HttpPatch("UpdateProductPrice/{UniversalProductCode}")]
+        public async Task<IActionResult> UpdateProductPrice(string UniversalProductCode, [FromBody] RequestUpdateProductPriceDto productDto, [FromServices] ICommandHandler<UpdateProductPriceCommand, ResponseUpdateProductPriceDto> commandHandler)
+        {
+            productDto.UniversalProductCode = UniversalProductCode;
+            var dd = await commandHandler.HandleAsync(new UpdateProductPriceCommand(productDto));
             return Ok(dd);
         }
 

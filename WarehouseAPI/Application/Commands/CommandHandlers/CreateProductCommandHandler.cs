@@ -25,7 +25,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
 
             var productFactory = new ProductFactory(domainService);
             var product = await productFactory.CreateProductAsync(command.CreateProductDto.ProductName, command.CreateProductDto.UniversalProductCode, command.CreateProductDto.ProductType, command.CreateProductDto.Description, companyInformation);
-            product.AddProductPrice(command.CreateProductDto.PurchasePrice, command.CreateProductDto.PercentageProfitPrice, command.CreateProductDto.Quantity, domainService);
+            product.AddProductPriceAsync(command.CreateProductDto.PurchasePrice, command.CreateProductDto.PercentageProfitPrice, command.CreateProductDto.Quantity, domainService);
             product.ActiveProduct();
 
             var result = await repository.AddAsync(product);
