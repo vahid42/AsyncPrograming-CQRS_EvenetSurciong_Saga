@@ -9,21 +9,17 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
     public class UpdateProductPriceCommandHandler : ICommandHandler<UpdateProductPriceCommand, ResponseUpdateProductPriceDto>
     {
         private readonly IWarehouseRepository<Product> repository;
-        private readonly IProductDomainService domainService;
-        private readonly IMapper mapper;
 
-        public UpdateProductPriceCommandHandler(IWarehouseRepository<Product> repository, IProductDomainService domainService, IMapper mapper)
+        public UpdateProductPriceCommandHandler(IWarehouseRepository<Product> repository)
         {
             this.repository = repository;
-            this.domainService = domainService;
-            this.mapper = mapper;
         }
         public async Task<ResponseUpdateProductPriceDto> HandleAsync(UpdateProductPriceCommand command)
         {
 
             var product = await repository.GetByCodeAsync(command.UpdateProductDto.UniversalProductCode);
             if (product == null)
-                throw new KeyNotFoundException($"Product with ID {command.UpdateProductDto.UniversalProductCode} not found.");
+                throw new KeyNotFoundException($"Product with UniversalProductCode {command.UpdateProductDto.UniversalProductCode} not found.");
 
             product.UpdateProductPrice(command.UpdateProductDto.PurchasePrice, command.UpdateProductDto.PercentageProfitPrice, command.UpdateProductDto.Quantity);
             var result = await repository.UpdateAsync(product);

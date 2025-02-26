@@ -92,13 +92,22 @@ namespace WarehouseAPI.Domain.ProductAggregate
             productPrices.Add(newProductPrice);
         }
 
+ 
         public void AddProductDiscountPrice(DateTime StartDiscount, DateTime EndDiscount, decimal DiscountPercentage)
         {
-            decimal orginalPrice = productPrices.FirstOrDefault(c => c.IsActive)?.FinalPrice ?? 0;
-            var productDiscountPrice = new ProductDiscountPrice(orginalPrice, StartDiscount, EndDiscount, DiscountPercentage, this);
-            productDiscountPrices.Add(productDiscountPrice);
-        }
 
+            var currentPrice = productPrices.FirstOrDefault(p => p.IsActive);
+            if (currentPrice != null)
+            {
+                var discountcurrentPrice = productDiscountPrices.FirstOrDefault(p => p.IsActive);
+                if (discountcurrentPrice != null)
+                    discountcurrentPrice.Deactivate();
+
+                var newProductDiscountPrice = new ProductDiscountPrice(currentPrice.FinalPrice, StartDiscount, EndDiscount, DiscountPercentage, this);
+                productDiscountPrices.Add(newProductDiscountPrice);
+
+            }
+        }
 
         public void ActiveProduct()
         {
