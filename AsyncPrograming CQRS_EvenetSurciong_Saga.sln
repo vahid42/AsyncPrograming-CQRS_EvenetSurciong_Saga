@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderAPI", "OrderAPI\OrderA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationAPI", "NotificationAPI\NotificationAPI.csproj", "{DE56629B-3176-47C5-8895-16684D83BFE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseAPIv2", "WarehouseAPIv2\WarehouseAPIv2.csproj", "{7DA295D1-79DE-4A55-BF5A-033F61F0CB3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DE56629B-3176-47C5-8895-16684D83BFE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE56629B-3176-47C5-8895-16684D83BFE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE56629B-3176-47C5-8895-16684D83BFE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DA295D1-79DE-4A55-BF5A-033F61F0CB3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA295D1-79DE-4A55-BF5A-033F61F0CB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA295D1-79DE-4A55-BF5A-033F61F0CB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA295D1-79DE-4A55-BF5A-033F61F0CB3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
