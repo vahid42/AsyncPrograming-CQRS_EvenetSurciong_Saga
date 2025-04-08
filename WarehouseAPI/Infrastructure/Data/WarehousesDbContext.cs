@@ -39,8 +39,59 @@ namespace WarehouseAPI.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
-            modelBuilder.Entity<ProductDiscountPrice>().HasKey(pdp => pdp.Id);
-            modelBuilder.Entity<ProductPrice>().HasKey(pp => pp.Id);
+            modelBuilder.Entity<ProductDiscountPrice>(productDiscount =>
+            {
+                productDiscount.HasKey(pdp => pdp.Id);
+                productDiscount.Property(ci => ci.StartDiscount)
+                .HasColumnName("StartDiscount")
+                .HasColumnType("DATETIME");
+
+                productDiscount.Property(ci => ci.EndDiscount)
+                    .HasColumnName("EndDiscount")
+                    .HasColumnType("DATETIME");
+
+                productDiscount.Property(ci => ci.DiscountPercentage)
+                    .HasColumnName("DiscountPercentage")
+                    .HasColumnType("REAL");
+
+                productDiscount.Property(ci => ci.OriginalPrice)
+                    .HasColumnName("OriginalPrice")
+                    .HasColumnType("REAL");
+
+                productDiscount.Property(ci => ci.FinalPriceWithDiscount)
+                    .HasColumnName("FinalPriceWithDiscount")
+                    .HasColumnType("REAL");
+
+                productDiscount.Property(ci => ci.CreateDatetime)
+                 .HasColumnName("CreateDatetime")
+                 .HasColumnType("DATETIME");
+
+            });
+
+            modelBuilder.Entity<ProductPrice>(productPrice =>
+            {
+                productPrice.HasKey(pp => pp.Id);
+                productPrice.Property(ci => ci.PurchasePrice)
+                    .HasColumnName("PurchasePrice")
+                    .HasColumnType("REAL");
+
+                productPrice.Property(ci => ci.FinalPrice)
+                    .HasColumnName("FinalPrice")
+                    .HasColumnType("REAL");
+
+                productPrice.Property(ci => ci.PercentageProfitPrice)
+                    .HasColumnName("PercentageProfitPrice")
+                    .HasColumnType("REAL");
+
+                productPrice.Property(ci => ci.Quantity)
+                    .HasColumnName("Quantity");
+
+                productPrice.Property(ci => ci.RemainingQuantity)
+                    .HasColumnName("RemainingQuantity");
+                productPrice.Property(ci => ci.CreateDatetime)
+                   .HasColumnName("CreateDatetime")
+                   .HasColumnType("DATETIME");
+            });
 
             modelBuilder.Entity<Product>()
             .HasMany(p => p.ProductPrices) // موجودیت اول: Product  

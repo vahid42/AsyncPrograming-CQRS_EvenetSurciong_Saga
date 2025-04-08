@@ -7,7 +7,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
         public DateTime StartDiscount { get; private set; }
         public DateTime EndDiscount { get; private set; }
         public decimal DiscountPercentage { get; private set; }
-        public decimal OrginalPrice { get; private set; }
+        public decimal OriginalPrice { get; private set; }
         public decimal FinalPriceWithDiscount { get; private set; }
         public DateTime CreateDatetime { get; protected set; }
         public bool IsActive { get; private set; }
@@ -17,7 +17,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
         //for EF
         private ProductDiscountPrice() { }
 
-        public ProductDiscountPrice(decimal OrginalPrice, DateTime StartDiscount, DateTime EndDiscount, decimal DiscountPercentage, Product product)
+        public ProductDiscountPrice(decimal OriginalPrice, DateTime StartDiscount, DateTime EndDiscount, decimal DiscountPercentage, Product product)
         {
             if (string.IsNullOrEmpty(product?.Id.ToString()))
                 throw new ArgumentNullException(nameof(product), "Product cannot be null.");
@@ -25,7 +25,7 @@ namespace WarehouseAPI.Domain.ProductAggregate
             if (StartDiscount >= EndDiscount)
                 throw new ArgumentException("StartDiscount must be earlier than EndDiscount.");
 
-            this.OrginalPrice = OrginalPrice;
+            this.OriginalPrice = OriginalPrice;
             this.StartDiscount = StartDiscount;
             this.EndDiscount = EndDiscount;
             this.DiscountPercentage = DiscountPercentage;
@@ -39,8 +39,8 @@ namespace WarehouseAPI.Domain.ProductAggregate
 
         private decimal CalculateFinalPrice()
         {
-            decimal discountAmount = DiscountPercentage / 100 * OrginalPrice;
-            decimal finalPrice = OrginalPrice - discountAmount;
+            decimal discountAmount = DiscountPercentage / 100 * OriginalPrice;
+            decimal finalPrice = OriginalPrice - discountAmount;
             return finalPrice;
         }
 

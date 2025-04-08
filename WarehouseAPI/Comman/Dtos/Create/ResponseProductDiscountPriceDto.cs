@@ -2,7 +2,7 @@
 {
     public class ResponseProductDiscountPriceDto
     {
-        public decimal OrginalPrice { get;  set; }
+        public decimal OriginalPrice { get;  set; }
         public decimal FinalPriceWithDiscount { get;  set; }
     }
 }

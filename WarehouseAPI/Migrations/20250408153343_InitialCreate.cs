@@ -38,12 +38,12 @@ namespace WarehouseAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    StartDiscount = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndDiscount = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DiscountPercentage = table.Column<decimal>(type: "TEXT", nullable: false),
-                    OrginalPrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    FinalPriceWithDiscount = table.Column<decimal>(type: "TEXT", nullable: false),
-                    CreateDatetime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    StartDiscount = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    EndDiscount = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    DiscountPercentage = table.Column<decimal>(type: "REAL", nullable: false),
+                    OriginalPrice = table.Column<decimal>(type: "REAL", nullable: false),
+                    FinalPriceWithDiscount = table.Column<decimal>(type: "REAL", nullable: false),
+                    CreateDatetime = table.Column<DateTime>(type: "DATETIME", nullable: false),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
@@ -63,13 +63,13 @@ namespace WarehouseAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PurchasePrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    PercentageProfitPrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    FinalPrice = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PurchasePrice = table.Column<decimal>(type: "REAL", nullable: false),
+                    PercentageProfitPrice = table.Column<decimal>(type: "REAL", nullable: false),
+                    FinalPrice = table.Column<decimal>(type: "REAL", nullable: false),
                     IsActive = table.Column<bool>(type: "INTEGER", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     RemainingQuantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    CreateDatetime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CreateDatetime = table.Column<DateTime>(type: "DATETIME", nullable: false),
                     ProductId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

@@ -11,7 +11,7 @@ using WarehouseAPI.Infrastructure.Data;
 namespace WarehouseAPI.Migrations
 {
     [DbContext(typeof(WarehousesDbContext))]
-    [Migration("20250215074511_InitialCreate")]
+    [Migration("20250408153343_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -56,28 +56,34 @@ namespace WarehouseAPI.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreateDatetime")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("CreateDatetime");
 
                     b.Property<decimal>("DiscountPercentage")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("REAL")
+                        .HasColumnName("DiscountPercentage");
 
                     b.Property<DateTime>("EndDiscount")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("EndDiscount");
 
                     b.Property<decimal>("FinalPriceWithDiscount")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("REAL")
+                        .HasColumnName("FinalPriceWithDiscount");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("OrginalPrice")
-                        .HasColumnType("TEXT");
+                    b.Property<decimal>("OriginalPrice")
+                        .HasColumnType("REAL")
+                        .HasColumnName("OriginalPrice");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartDiscount")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("StartDiscount");
 
                     b.HasKey("Id");
 
@@ -93,28 +99,34 @@ namespace WarehouseAPI.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreateDatetime")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("DATETIME")
+                        .HasColumnName("CreateDatetime");
 
                     b.Property<decimal>("FinalPrice")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("REAL")
+                        .HasColumnName("FinalPrice");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("PercentageProfitPrice")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("REAL")
+                        .HasColumnName("PercentageProfitPrice");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("PurchasePrice")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("REAL")
+                        .HasColumnName("PurchasePrice");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("Quantity");
 
                     b.Property<int>("RemainingQuantity")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("RemainingQuantity");
 
                     b.HasKey("Id");
 

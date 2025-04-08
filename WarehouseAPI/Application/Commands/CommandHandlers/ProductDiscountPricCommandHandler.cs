@@ -28,7 +28,7 @@ namespace WarehouseAPI.Application.Commands.CommandHandlers
             if (result != null)
             {
                 productDiscountPriceDto.FinalPriceWithDiscount = result.ProductDiscountPrices.FirstOrDefault(c => c.IsActive).FinalPriceWithDiscount;
-                productDiscountPriceDto.OrginalPrice = product.ProductPrices.FirstOrDefault(c => c.IsActive).FinalPrice;
+                productDiscountPriceDto.OriginalPrice = product.ProductPrices.FirstOrDefault(c => c.IsActive).FinalPrice;
 
             }
 
