@@ -11,9 +11,9 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
             _domainService = domainService;
         }
 
-        public async Task<Product> CreateProductAsync(string productName, string universalProductCode, ProductType productType, string? description, CompanyInformation companyInformation)
+        public async Task<Product> CreateProductAsync(string productName, string universalProductCode, ProductType productType, string? description, CompanyInformation companyInformation,ProductPrice productPrice,ProductDiscountPrice productDiscountPrice)
         {
-            return await Product.CreateAsync(productName, universalProductCode, productType, description, companyInformation, _domainService);
+            return await Product.CreateAsync(productName, universalProductCode, productType, description, companyInformation,productPrice,productDiscountPrice, _domainService);
         }
     }
 }

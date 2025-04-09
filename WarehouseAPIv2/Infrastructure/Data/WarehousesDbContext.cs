@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using WarehouseAPIv2.Domain.EventAggregate;
 using WarehouseAPIv2.Domain.ProductAggregate;
 
 namespace WarehouseAPIv2.Infrastructure.Data
@@ -28,7 +29,11 @@ namespace WarehouseAPIv2.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
-
+            modelBuilder.Entity<Event>(@event =>
+            {
+                @event.HasKey(p => p.Id);
+                @event.Property(c => c.CreateDatetime).HasColumnType("DATETIME");
+            });
 
 
 
@@ -107,7 +112,7 @@ namespace WarehouseAPIv2.Infrastructure.Data
                     productDiscount.Property(ci => ci.FinalPriceWithDiscount)
                         .HasColumnName("FinalPriceWithDiscount")
                         .HasColumnType("REAL");
-                        
+
                 });
             });
             #endregion

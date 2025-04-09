@@ -17,9 +17,9 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
         public ProductDiscountPrice? ProductDiscountPrice { get; protected set; }
 
         //EF
-        private Product() {}
+        private Product() { }
 
-        private Product(string ProductName, string UniversalProductCode, ProductType ProductType, string? Description, CompanyInformation companyInformation)
+        private Product(string ProductName, string UniversalProductCode, ProductType ProductType, string? Description, CompanyInformation companyInformation, ProductPrice productPrice, ProductDiscountPrice productDiscountPrice)
         {
             Id = Guid.NewGuid();
             CreateDatetime = DateTime.Now;
@@ -29,16 +29,19 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
             this.Description = Description;
             this.CreateDatetime = DateTime.Now;
             CompanyInformation = companyInformation;
+            ProductPrice = productPrice;
+            ProductDiscountPrice = productDiscountPrice;
+            IsActive = true;
         }
 
 
-        public static async Task<Product> CreateAsync(string productName, string universalProductCode, ProductType productType, string? description, CompanyInformation companyInformation, IProductDomainService domainService)
+        public static async Task<Product> CreateAsync(string productName, string universalProductCode, ProductType productType, string? description, CompanyInformation companyInformation, ProductPrice productPrice, ProductDiscountPrice productDiscountPrice , IProductDomainService domainService)
         {
             if (string.IsNullOrWhiteSpace(productName))
-                throw new ArgumentOutOfRangeException("The Product name must not be empty.");
+                throw new ArgumentNullException("The Product name must not be empty.");
 
             if (string.IsNullOrWhiteSpace(universalProductCode))
-                throw new ArgumentOutOfRangeException("The Universal Product Code must not be empty.");
+                throw new ArgumentNullException("The Universal Product Code must not be empty.");
 
             bool codeExist = await domainService.DuplicateCodeCheck(universalProductCode);
             if (codeExist)
@@ -47,7 +50,7 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
             if (productType == ProductType.None)
                 throw new ArgumentOutOfRangeException("The Product ProductType must not be None.");
 
-            return new Product(productName, universalProductCode, productType, description, companyInformation);
+            return new Product(productName, universalProductCode, productType, description, companyInformation, productPrice, productDiscountPrice);
         }
 
         public void UpdateInfo(string productName, ProductType productType, string? description, CompanyInformation companyInformation)
@@ -62,12 +65,6 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
                 this.ProductType = productType;
         }
 
-        public async void AddProductPriceAsync(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity, IProductDomainService domainService)
-        {
- 
-
-            ProductPrice = new ProductPrice(PurchasePrice, PercentageProfitPrice, Quantity);
-        }
 
         public void UpdateProductPrice(decimal newPurchasePrice, decimal newPercentageProfitPrice, int newQuantity)
         {
