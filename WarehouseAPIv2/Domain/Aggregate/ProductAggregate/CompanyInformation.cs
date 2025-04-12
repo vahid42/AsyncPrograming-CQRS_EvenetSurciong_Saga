@@ -1,6 +1,6 @@
 ﻿using WarehouseAPIv2.Domain.Base;
 
-namespace WarehouseAPIv2.Domain.ProductAggregate
+namespace WarehouseAPIv2.Domain.Aggregate.ProductAggregate
 {
     public class CompanyInformation : ValueObject
     {

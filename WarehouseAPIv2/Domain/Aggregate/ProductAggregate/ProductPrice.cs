@@ -1,6 +1,6 @@
 ﻿using WarehouseAPIv2.Domain.Base;
 
-namespace WarehouseAPIv2.Domain.ProductAggregate
+namespace WarehouseAPIv2.Domain.Aggregate.ProductAggregate
 {
     public class ProductPrice : ValueObject
     {
@@ -9,8 +9,8 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
         public decimal FinalPrice { get; private set; }
         public int Quantity { get; protected set; }
         public int RemainingQuantity { get; protected set; }
- 
- 
+
+
         public ProductPrice(decimal PurchasePrice, decimal PercentageProfitPrice, int Quantity)
         {
             if (PurchasePrice < 0)
@@ -23,17 +23,17 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
             this.PercentageProfitPrice = PercentageProfitPrice;
             this.Quantity = Quantity;
             RemainingQuantity = Quantity;
-            FinalPrice = (PurchasePrice * PercentageProfitPrice)/100+ PurchasePrice;
+            FinalPrice = PurchasePrice * PercentageProfitPrice / 100 + PurchasePrice;
 
         }
 
         public override bool Equals(object? obj)
         {
             if (obj is ProductPrice item)
-                return PurchasePrice == item.PurchasePrice && 
-                    PercentageProfitPrice == item.PercentageProfitPrice && 
+                return PurchasePrice == item.PurchasePrice &&
+                    PercentageProfitPrice == item.PercentageProfitPrice &&
                     FinalPrice == item.FinalPrice &&
-                    Quantity == item.Quantity && 
+                    Quantity == item.Quantity &&
                     RemainingQuantity == item.RemainingQuantity;
 
             return false;

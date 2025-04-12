@@ -1,13 +1,15 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using WarehouseAPIv2.Domain.EventAggregate;
-using WarehouseAPIv2.Domain.ProductAggregate;
+using WarehouseAPIv2.Domain.Aggregate.EventAggregate;
+using WarehouseAPIv2.Domain.Aggregate.ProductAggregate;
 
 namespace WarehouseAPIv2.Infrastructure.Data
 {
     public class WarehousesDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<Event> Events { get; set; }
+
         public WarehousesDbContext(DbContextOptions<WarehousesDbContext> options) : base(options)
         {
             //"C:\\Users\\Laptop-V\\AppData\\Local\\Order.db"
@@ -28,7 +30,13 @@ namespace WarehouseAPIv2.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>().HasKey(p => p.Id);
+            modelBuilder.Entity<Product>(p =>
+            {
+
+                p.HasKey(p => p.Id);
+                p.Ignore(p => p.DomainEvents);
+            });
+            
             modelBuilder.Entity<Event>(@event =>
             {
                 @event.HasKey(p => p.Id);

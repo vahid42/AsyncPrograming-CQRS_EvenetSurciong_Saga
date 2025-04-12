@@ -1,4 +1,4 @@
-﻿using WarehouseAPIv2.Domain.ProductAggregate;
+﻿using WarehouseAPIv2.Domain.Aggregate.ProductAggregate;
 
 namespace WarehouseAPIv2.Comman.Dtos
 {

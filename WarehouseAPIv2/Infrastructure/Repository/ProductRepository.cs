@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using WarehouseAPIv2.Domain.ProductAggregate;
+using WarehouseAPIv2.Domain.Aggregate.ProductAggregate;
 using WarehouseAPIv2.Domain.Repositories;
 using WarehouseAPIv2.Infrastructure.Data;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;

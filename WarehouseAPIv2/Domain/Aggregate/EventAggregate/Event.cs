@@ -1,6 +1,6 @@
 ﻿using WarehouseAPIv2.Domain.Base;
 
-namespace WarehouseAPIv2.Domain.EventAggregate
+namespace WarehouseAPIv2.Domain.Aggregate.EventAggregate
 {
     public class Event : Entity, IAggregateRoot
     {
@@ -13,13 +13,13 @@ namespace WarehouseAPIv2.Domain.EventAggregate
 
         public Event(Guid aggregateId, string eventType, string eventData)
         {
-            if(aggregateId == Guid.Empty)
+            if (aggregateId == Guid.Empty)
                 throw new ArgumentNullException("The AggregateId must not be empty.");
 
-            if (string.IsNullOrWhiteSpace(EventData))
+            if (string.IsNullOrWhiteSpace(eventData))
                 throw new ArgumentNullException("The EventData must not be empty.");
 
-            if (string.IsNullOrWhiteSpace(EventType))
+            if (string.IsNullOrWhiteSpace(eventType))
                 throw new ArgumentNullException("The EventType must not be empty.");
 
             AggregateId = aggregateId;

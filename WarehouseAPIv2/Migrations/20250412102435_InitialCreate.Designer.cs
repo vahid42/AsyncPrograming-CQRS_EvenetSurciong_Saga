@@ -11,7 +11,7 @@ using WarehouseAPIv2.Infrastructure.Data;
 namespace WarehouseAPIv2.Migrations
 {
     [DbContext(typeof(WarehousesDbContext))]
-    [Migration("20250408132949_InitialCreate")]
+    [Migration("20250412102435_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,32 @@ namespace WarehouseAPIv2.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.14");
 
-            modelBuilder.Entity("WarehouseAPIv2.Domain.ProductAggregate.Product", b =>
+            modelBuilder.Entity("WarehouseAPIv2.Domain.Aggregate.EventAggregate.Event", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreateDatetime")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("EventData")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("WarehouseAPIv2.Domain.Aggregate.ProductAggregate.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,9 +74,9 @@ namespace WarehouseAPIv2.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("WarehouseAPIv2.Domain.ProductAggregate.Product", b =>
+            modelBuilder.Entity("WarehouseAPIv2.Domain.Aggregate.ProductAggregate.Product", b =>
                 {
-                    b.OwnsOne("WarehouseAPIv2.Domain.ProductAggregate.CompanyInformation", "CompanyInformation", b1 =>
+                    b.OwnsOne("WarehouseAPIv2.Domain.Aggregate.ProductAggregate.CompanyInformation", "CompanyInformation", b1 =>
                         {
                             b1.Property<Guid>("ProductId")
                                 .HasColumnType("TEXT");
@@ -84,7 +109,7 @@ namespace WarehouseAPIv2.Migrations
                                 .HasForeignKey("ProductId");
                         });
 
-                    b.OwnsOne("WarehouseAPIv2.Domain.ProductAggregate.ProductDiscountPrice", "ProductDiscountPrice", b1 =>
+                    b.OwnsOne("WarehouseAPIv2.Domain.Aggregate.ProductAggregate.ProductDiscountPrice", "ProductDiscountPrice", b1 =>
                         {
                             b1.Property<Guid>("ProductId")
                                 .HasColumnType("TEXT");
@@ -117,7 +142,7 @@ namespace WarehouseAPIv2.Migrations
                                 .HasForeignKey("ProductId");
                         });
 
-                    b.OwnsOne("WarehouseAPIv2.Domain.ProductAggregate.ProductPrice", "ProductPrice", b1 =>
+                    b.OwnsOne("WarehouseAPIv2.Domain.Aggregate.ProductAggregate.ProductPrice", "ProductPrice", b1 =>
                         {
                             b1.Property<Guid>("ProductId")
                                 .HasColumnType("TEXT");

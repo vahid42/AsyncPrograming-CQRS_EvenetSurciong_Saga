@@ -1,4 +1,4 @@
-﻿using WarehouseAPIv2.Domain.ProductAggregate;
+﻿using WarehouseAPIv2.Domain.Aggregate.ProductAggregate;
 using WarehouseAPIv2.Domain.Repositories;
 
 namespace WarehouseAPIv2.Domain.DomainService

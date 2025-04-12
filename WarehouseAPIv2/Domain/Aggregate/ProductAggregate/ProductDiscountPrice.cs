@@ -1,6 +1,6 @@
 ﻿using WarehouseAPIv2.Domain.Base;
 
-namespace WarehouseAPIv2.Domain.ProductAggregate
+namespace WarehouseAPIv2.Domain.Aggregate.ProductAggregate
 {
     public class ProductDiscountPrice : ValueObject
     {
@@ -18,10 +18,10 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
                 throw new ArgumentException("StartDiscount must be earlier than EndDiscount.");
 
             if (DiscountPercentage < 0 || DiscountPercentage > 100)
-                throw new ArgumentOutOfRangeException(nameof(DiscountPercentage),"Discount percentage must be between 0 and 100.");
+                throw new ArgumentOutOfRangeException(nameof(DiscountPercentage), "Discount percentage must be between 0 and 100.");
 
             if (OriginalPrice <= 0)
-                throw new ArgumentOutOfRangeException(nameof(OriginalPrice),"Original price must be positive.");
+                throw new ArgumentOutOfRangeException(nameof(OriginalPrice), "Original price must be positive.");
 
             this.OriginalPrice = OriginalPrice;
             this.StartDiscount = StartDiscount;
@@ -42,7 +42,7 @@ namespace WarehouseAPIv2.Domain.ProductAggregate
             var discountAmount = OriginalPrice * (DiscountPercentage / 100m);
             return OriginalPrice - discountAmount;
         }
- 
+
 
         public override bool Equals(object? obj)
         {
