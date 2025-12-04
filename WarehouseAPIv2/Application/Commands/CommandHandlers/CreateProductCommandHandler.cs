@@ -5,6 +5,7 @@ using WarehouseAPIv2.Domain.Aggregate.ProductAggregate;
 using WarehouseAPIv2.Domain.DomainService;
 using WarehouseAPIv2.Domain.Events;
 using WarehouseAPIv2.Domain.Repositories;
+using System.Linq;
 
 namespace WarehouseAPIv2.Application.Commands.CommandHandlers
 {
@@ -41,13 +42,12 @@ namespace WarehouseAPIv2.Application.Commands.CommandHandlers
             product.ActiveProduct();
 
             var result = await repository.AddAsync(product);
-            foreach (DomainEvent item in product.DomainEvents)
-            {
-                events.Add(new Event(product.Id, item.Nameof, JsonConvert.SerializeObject(item)));
-       
-            }
+
+            events.AddRange(from DomainEvent item in product.DomainEvents
+                            select new Event(product.Id, item.Nameof, JsonConvert.SerializeObject(item)));
             await eventRepository.AddAsync(events);
 
+            product.ClearDomainEvent();
 
             return new ResposeProductDto()
             {

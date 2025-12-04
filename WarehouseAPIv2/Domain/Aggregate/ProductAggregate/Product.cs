@@ -118,8 +118,17 @@ namespace WarehouseAPIv2.Domain.Aggregate.ProductAggregate
             domainEvents.Add(@event);
 
         }
+        public void DeactiveProduct()
+        {
+            var @event = new ProductdeactivatedEvent(Id, false, nameof(Product));
+            Apply(@event);
+            domainEvents.Add(@event);
 
-
+        }
+        public void ClearDomainEvent()
+        {
+            domainEvents.Clear();
+        }
         private void Apply(DomainEvent @event)
         {
             switch (@event)
@@ -158,8 +167,13 @@ namespace WarehouseAPIv2.Domain.Aggregate.ProductAggregate
                 case ProductActivatedEvent e:
                     IsActive = e.IsActive;
                     break;
+                case ProductdeactivatedEvent e:
+                    IsActive = e.IsActive;
+                    break;
             }
         }
+
+
 
     }
 }
